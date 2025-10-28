@@ -1,5 +1,6 @@
 import sys
 from read.reader import Reader
+from search.search import search_sentence
 
 def main():
     if len(sys.argv) < 1:
@@ -11,7 +12,12 @@ def main():
     file_path = sys.argv[2]
 
     reader = Reader()
-    reader.read_line_by_line(file_path)
+    lines = reader.read_line_by_line(file_path)
+
+    for line in lines:
+        if search_sentence(pattern, line):
+            print(line)
+
 
 if __name__ == "__main__":
     main()

@@ -6,8 +6,9 @@ class Reader:
         producer_thread = threading.Thread(target=self.producer, args=(file_path, q))
 
         producer_thread.start()
-        self.consumer(q)
+        lines = self.consumer(q)
         producer_thread.join()
+        return lines
 
 
     def producer(self, file_path, queue):
@@ -21,6 +22,6 @@ class Reader:
             line = queue.get()
             if line is None:
                 break
-            print("Processed: :", line)
+            yield line
 
             
