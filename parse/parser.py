@@ -1,20 +1,17 @@
 from enum import Enum
+from dataclasses import dataclass
 
-
-class Literal:
-    def __init__(self, character) -> None:
-        self.character = character
-
-class Token(Enum):
+class TokenType(Enum):
     START_ANCHOR = "^"
     ANY_CHAR = "."
     END_ANCHOR = "$"
-    LITERAL = Literal("")
+    LITERAL = ""
+    QUANTIFIER = "*"
 
-    def __new__(cls, value):
-        obj = object.__new__(cls)
-        obj._value_ = value
-        return obj  
+@dataclass
+class Token:
+    type: TokenType
+    value: str = ""
 
 class Parser:
     def __init__(self) -> None:
@@ -24,12 +21,17 @@ class Parser:
         tokens = []
         for char in pattern:
             match char:
-                case Token.START_ANCHOR.value:
-                    tokens.append(Token.START_ANCHOR)
-                case Token.END_ANCHOR.value:
-                    tokens.append(Token.END_ANCHOR)
-                case _:
-                    token = Token.LITERAL.value.character = char
+                case TokenType.START_ANCHOR.value:
+                    token = Token(TokenType.START_ANCHOR, char)
                     tokens.append(token)
-        return []
+                case TokenType.END_ANCHOR.value:
+                    token = Token(TokenType.END_ANCHOR, char)
+                    tokens.append(token)
+                case TokenType.QUANTIFIER.value:
+                    token = Token(TokenType.QUANTIFIER, char)
+                    tokens.append(token)
+                case _:
+                    token = Token(TokenType.LITERAL, char)
+                    tokens.append(token)
+        return tokens
 

@@ -1,7 +1,7 @@
 import sys
 from read.reader import Reader
 from search.search import search_sentence
-from parse.parser import Parser
+from parse.parser import Parser, Token
 
 def main():
     if len(sys.argv) < 1:
@@ -19,7 +19,9 @@ def main():
 #        if search_sentence(pattern, line):
 #            print(line)
     parser = Parser()
-    parser.parse_pattern(pattern)
+    tokens = parser.parse_pattern(pattern)
+    for token in tokens:
+        print(token.type, token.value)
 
 
 if __name__ == "__main__":
