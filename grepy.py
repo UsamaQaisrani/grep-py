@@ -1,6 +1,7 @@
 import sys
 from read.reader import Reader
 from search.search import search_sentence
+from parse.parser import Parser
 
 def main():
     if len(sys.argv) < 1:
@@ -14,9 +15,11 @@ def main():
     reader = Reader()
     lines = reader.read_line_by_line(file_path)
 
-    for line in lines:
-        if search_sentence(pattern, line):
-            print(line)
+#    for line in lines:
+#        if search_sentence(pattern, line):
+#            print(line)
+    parser = Parser()
+    parser.parse_pattern(pattern)
 
 
 if __name__ == "__main__":
