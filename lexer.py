@@ -5,6 +5,7 @@ class TokenType(Enum):
     START_ANCHOR = "^"
     ANY_CHAR = "."
     END_ANCHOR = "$"
+    START_AND_END_ANCHOR = "^$"
     LITERAL = ""
     QUANTIFIER = "*"
 
@@ -13,13 +14,13 @@ class Token:
     type: TokenType
     value: str = ""
 
-class Parser:
-    def __init__(self) -> None:
-        pass
+@dataclass
+class Lexer:
+    pattern: str
 
-    def parse_pattern(self, pattern) -> list[Token]:
+    def tokenize(self) -> list[Token]:
         tokens = []
-        for char in pattern:
+        for char in self.pattern:
             match char:
                 case TokenType.START_ANCHOR.value:
                     token = Token(TokenType.START_ANCHOR, char)

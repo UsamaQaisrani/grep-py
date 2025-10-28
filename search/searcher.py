@@ -8,8 +8,11 @@ class Searcher:
         return pattern in input
 
     def match(self, line):
+        check = False
         match self.tokens[0].type:
             case TokenType.START_ANCHOR:
                 pattern = "".join(token.value for token in self.tokens[1:])
-                return pattern == line[0:len(pattern)]
+                check = pattern == line[0:len(pattern)]
 
+        if tokens[-1].type == TokenType.END_ANCHOR:
+            if line
