@@ -15,14 +15,13 @@ def main():
     reader = Reader()
     lines = reader.read_line_by_line(file_path)
 
+#    for line in lines:
+#        if search_sentence(pattern, line):
+#            print(line)
     parser = Parser()
     tokens = parser.parse_pattern(pattern)
-
-    searcher = Searcher(tokens)
-    for line in lines:
-        if searcher.match(line):
-            print(line)
-
+    for token in tokens:
+        print(token.type)
 
 
 if __name__ == "__main__":
