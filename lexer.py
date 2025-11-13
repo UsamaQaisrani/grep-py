@@ -1,5 +1,5 @@
 from enum import Enum
-from dataclasses import dataclass
+import sys
 
 class TokenType(Enum):
     START_ANCHOR = "^"
@@ -9,30 +9,44 @@ class TokenType(Enum):
     LITERAL = ""
     QUANTIFIER = "*"
 
-@dataclass
 class Token:
-    type: TokenType
-    value: str = ""
+    def __init__(self, token_type, token_value) -> None:
+        self.token_type = token_type
+        self.token_value = token_value
 
-@dataclass
 class Lexer:
-    pattern: str
+    def __init__(self, source) -> None:
+        self.source = source
+        self.currChar = ""
+        self.currPos = -1
+        self.next_char()
+        
 
-    def tokenize(self) -> list[Token]:
-        tokens = []
-        for char in self.pattern:
-            match char:
-                case TokenType.START_ANCHOR.value:
-                    token = Token(TokenType.START_ANCHOR, char)
-                    tokens.append(token)
-                case TokenType.END_ANCHOR.value:
-                    token = Token(TokenType.END_ANCHOR, char)
-                    tokens.append(token)
-                case TokenType.QUANTIFIER.value:
-                    token = Token(TokenType.QUANTIFIER, char)
-                    tokens.append(token)
-                case _:
-                    token = Token(TokenType.LITERAL, char)
-                    tokens.append(token)
-        return tokens
+    def next_char(self):
+        self.currPos += 1
+        if self.currPos >= len(self.source):
+            self.currChar = "\0"
+        else:
+            self.currChar = self.source[self.currPos]
+
+    def peek(self):
+        if self.currPos + 1 >= len(self.source):
+            return "\0"
+        else:
+            return self.source[self.currPos + 1]
+
+    def abort(self, message):
+        sys.exit(f"Lexing Error: {message}")
+
+    def get_token(self):
+        token = None
+
+        #TODO: Operate on source to create tokens
+
+        self.next_char()
+        return token
+
+    def pre_process(self):
+        #TODO: Preprocess and add concat for easier parsing later.
+        pass
 
