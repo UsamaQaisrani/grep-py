@@ -42,11 +42,9 @@ class Lexer:
         token = None
 
         #TODO: Operate on source to create tokens
+        if self.currChar == ""
+
 
         self.next_char()
         return token
-
-    def pre_process(self):
-        #TODO: Preprocess and add concat for easier parsing later.
-        pass
 
