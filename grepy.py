@@ -1,6 +1,5 @@
 import sys
 from read.reader import Reader
-from search.searcher import Searcher
 from lexer import Lexer
 
 def main():
@@ -15,13 +14,15 @@ def main():
     reader = Reader()
     lines = reader.read_line_by_line(file_path)
 
-    lexer = Lexer(pattern)
-    tokens = lexer.tokenize()
+    print(pattern)
 
-    searcher = Searcher(tokens)
-    for line in lines:
-        if searcher.match(line):
-            print(line)
+    lexer = Lexer(pattern)
+#    tokens = lexer.tokenize()
+
+#    searcher = Searcher(tokens)
+#    for line in lines:
+#        if searcher.match(line):
+#            print(line)
 
 def preprocess_input(input):
     if len(input) < 2:
@@ -57,9 +58,13 @@ def preprocess_input(input):
         if concat:
             result.append(".")
 
-        return "".join(result)
+    result.append(input[-1])
+
+    return "".join(result)
 
 
 
 if __name__ == "__main__":
     main()
+
+

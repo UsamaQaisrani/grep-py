@@ -42,8 +42,6 @@ class Lexer:
         token = None
 
         #TODO: Operate on source to create tokens
-        if self.currChar == ""
-
 
         self.next_char()
         return token
