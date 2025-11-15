@@ -1,6 +1,7 @@
 import sys
 from read.reader import Reader
 from lexer import Lexer
+from parser import Parser
 
 def main():
     if len(sys.argv) < 1:
@@ -17,12 +18,8 @@ def main():
     print(pattern)
 
     lexer = Lexer(pattern)
-#    tokens = lexer.tokenize()
-
-#    searcher = Searcher(tokens)
-#    for line in lines:
-#        if searcher.match(line):
-#            print(line)
+    parser = Parser(lexer)
+    parser.start()
 
 def preprocess_input(input):
     if len(input) < 2:
