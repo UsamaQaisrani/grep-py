@@ -2,6 +2,7 @@ import sys
 from read.reader import Reader
 from lexer import Lexer
 from parser import Parser
+from nfa import *
 
 def main():
     if len(sys.argv) < 1:
@@ -19,7 +20,9 @@ def main():
 
     lexer = Lexer(pattern)
     parser = Parser(lexer)
-    parser.start()
+    ast_root = parser.start()
+    nfa = NFA()
+    nfa.build_fragment(ast_root)
 
 def preprocess_input(input):
     if len(input) < 2:
