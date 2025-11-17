@@ -1,4 +1,4 @@
-Implemetation of Grep command in linux. Basically implementation of a Regex Engine for matching lines in files.
+Python implemetation of Grep command in linux. Basically implementation of a Regex Engine for matching lines in files.
 
 Done With, 
 - Lexer
