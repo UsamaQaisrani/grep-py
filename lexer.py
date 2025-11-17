@@ -13,6 +13,7 @@ class TokenType(Enum):
     GROUP_START = 9
     GROUP_END = 10
     NEWLINE = 11
+    GROUP = 12
 
 
 class Token:
@@ -65,8 +66,6 @@ class Lexer:
             token = Token(TokenType.NEWLINE, self.curr_char)
         else:
             token = Token(TokenType.LITERAL, self.curr_char)
-
-        print(token.token_type, token.token_value)
 
         self.next_char()
         return token
