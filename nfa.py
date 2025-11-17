@@ -15,7 +15,6 @@ class NFAFragment:
         self.end_state = end_state
 
 class NFA:
-
     def __init__(self, ast_root) -> None:
         self.ast_root = ast_root
         self.EPSILON = "__EPSILON__"
