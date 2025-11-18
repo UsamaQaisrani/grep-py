@@ -3,7 +3,7 @@ Python implemetation of Grep command in linux. Basically implementation of a Reg
 Done With, 
 - Lexer
 - Parser
+- Coverting Abstract Syntax Tree to NFA states for matching.
 
 Working on,
-- Coverting Abstract Syntax Tree to NFA states for matching.
 - Matching the NFA states to the string.
