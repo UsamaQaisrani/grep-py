@@ -33,8 +33,6 @@ class Matcher:
 
                 current_states = self.get_closure_set(next_states)
 
-            # Step 3: Final Check
-            # Check if any of the final reachable states are accepting states.
             for state in current_states:
                 if state.is_accepting:
                     return True
