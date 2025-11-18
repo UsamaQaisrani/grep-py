@@ -18,17 +18,25 @@ class NFA:
     def __init__(self, ast_root) -> None:
         self.ast_root = ast_root
         self.EPSILON = "__EPSILON__"
+        self.ANY_CHAR = "__ANY_CHAR__"
 
     def build_nfa(self):
-        final_fragment = self.build_fragment(self.ast_root)
-        final_fragment.end_state.is_accepting = True
-        return final_fragment.start_state
+        pattern_frag = self.build_fragment(self.ast_root)
+        
+        start_state = NFAState()
+        start_state.transitions[self.EPSILON] = [pattern_frag.start_state, start_state]
+        start_state.transitions[self.ANY_CHAR] = [start_state] 
+        end_state = NFAState(is_accepting=True) 
+        pattern_frag.end_state.transitions[self.EPSILON] = [end_state]
+        end_state.transitions[self.ANY_CHAR] = [end_state]
+        return start_state
 
     def build_fragment(self, node):
         if node.token.token_type == TokenType.LITERAL:
             start_state = NFAState()
             end_state = NFAState()
-            start_state.transitions[node.token.value] = [end_state]
+            char = node.token.token_value
+            start_state.transitions[char] = [end_state]
             return NFAFragment(start_state, end_state)
 
         elif node.token.token_type == TokenType.CONCAT:
@@ -73,23 +81,5 @@ class NFA:
         
         else:
             raise ValueError(f"Unknown AST node type: {node.token.token_type}")
-
-    def get_closure_set(self):
-        to_visit = [self.ast_root]
-        visited = set()
-        visited.add(self.ast_root)
-
-        while to_visit:
-            curr_state = to_visit.pop()
-            if self.EPSILON in curr_state.transitions:
-                for next_state in curr_state.transitions[self.EPSILON]:
-                    if next_state not in visited:
-                        visited.add(next_state)
-                        to_visit.append(next_state)
-
-        return visited
-
-
-
 
 

@@ -1,8 +1,9 @@
 import sys
-from read.reader import Reader
+from reader import Reader
 from lexer import Lexer
 from parser import Parser
 from nfa import *
+from matcher import *
 
 def main():
     if len(sys.argv) < 1:
@@ -16,13 +17,17 @@ def main():
     reader = Reader()
     lines = reader.read_line_by_line(file_path)
 
-    print(pattern)
-
     lexer = Lexer(pattern)
     parser = Parser(lexer)
     ast_root = parser.start()
     nfa = NFA(ast_root)
-    res_nfa = nfa.build_fragment(ast_root)
+    nfa_start_state = nfa.build_nfa()
+    matcher = Matcher(nfa_start_state)
+
+    for line in lines:
+        stripped_line = line.strip()
+        if matcher.match(stripped_line):
+            print(line)
 
 def preprocess_input(input):
     if len(input) < 2:
