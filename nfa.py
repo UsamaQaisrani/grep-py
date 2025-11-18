@@ -73,3 +73,23 @@ class NFA:
         
         else:
             raise ValueError(f"Unknown AST node type: {node.token.token_type}")
+
+    def get_closure_set(self):
+        to_visit = [self.ast_root]
+        visited = set()
+        visited.add(self.ast_root)
+
+        while to_visit:
+            curr_state = to_visit.pop()
+            if self.EPSILON in curr_state.transitions:
+                for next_state in curr_state.transitions[self.EPSILON]:
+                    if next_state not in visited:
+                        visited.add(next_state)
+                        to_visit.append(next_state)
+
+        return visited
+
+
+
+
+

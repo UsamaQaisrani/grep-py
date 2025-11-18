@@ -21,8 +21,8 @@ def main():
     lexer = Lexer(pattern)
     parser = Parser(lexer)
     ast_root = parser.start()
-    nfa = NFA()
-    nfa.build_fragment(ast_root)
+    nfa = NFA(ast_root)
+    res_nfa = nfa.build_fragment(ast_root)
 
 def preprocess_input(input):
     if len(input) < 2:
